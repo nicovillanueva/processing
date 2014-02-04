@@ -1,9 +1,12 @@
-PShape hex, square;
+PShape hex;
 Animation anim;
+float tx;
 
 void setup() {
   size(500, 500, P2D);
   frameRate(24);
+  background(51);
+  tx = random(10000);
   
   // ---------
   
@@ -11,50 +14,34 @@ void setup() {
   
   // ---------
   
-  background(51);
+  int sides = 6;
+  float radius = width/4;
+  
+  // ---------
   
   hex = createShape();
-  square = createShape();
-  
-  square.beginShape();
-  square.noFill();
-  square.strokeWeight(2);
-  square.stroke(255);
-  square.vertex(10, 10);
-  square.vertex(10, 30);
-  square.vertex(30, 30);
-  square.vertex(30, 10);
-  square.vertex(10, 10);
-  square.endShape();
-  
+
+  hex.translate(width/2, height/2); // bring global 0,0 to center
   
   hex.beginShape();
   hex.noFill();
   hex.strokeWeight(2);
   hex.stroke(255);
-  
-  translate(width/2, height/2);
-  for(int i = 0; i < 7; i++){
-    hex.vertex(0, -70); // FUCK
-    rotate(radians(60));
-    text(String.valueOf(i), 0, -70, 0);
+  for(int i = 0; i < sides; i++){
+    float x = cos(TWO_PI / sides*i) * radius;
+    float y = sin(TWO_PI / sides*i) * radius;
+    hex.vertex(x, y);
   }
-  
-  hex.endShape();
-  //popMatrix();
-  
-  //shape(hex, width/2, height/2);
+  hex.endShape(CLOSE);
 }
 
 void draw(){
-  // frame.setTitle(String.valueOf(frameRate));
-  // anim.display(0,0);
-  hex.setFill(color(#FFFFFF));
-  hex.setStrokeWeight(5);
-  hex.setStroke(color(#FFFFFF));
-  shape(hex, 0,0);
-  
-  shape(square, width/2, height/2);
+  this.tx += 0.01;
+  frame.setTitle(String.valueOf(frameRate));
+  anim.display(0,0);
+  filter(INVERT);
+  hex.scale(map(noise(tx), 0.0, 1.0, 0.9, 1.1)); // scaling is a little... odd
+  shape(hex);
 }
 
 

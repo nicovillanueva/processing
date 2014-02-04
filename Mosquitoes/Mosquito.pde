@@ -32,12 +32,15 @@ class Mosquito {
   }
   
   public void checkEdges() {
+    // TODO: use velocity instead of position.
     if(this.position.x < this.size || this.position.x > width - this.size / 2){
-      this.velocity.x *= -1;
+      //this.velocity.x *= -1;
+      this.position.x = this.size;
       if(this.position.x < this.size) { this.position.x = this.size; } else { this.position.x = width - this.size / 2; }
     }
     if(this.position.y < this.size || this.position.y > height - this.size / 2){
-      this.velocity.y *= -1;
+      //this.velocity.y *= -1;
+      this.position.y = this.size;
       if(this.position.y < this.size) { this.position.y = this.size; } else { this.position.y = height - this.size / 2; }
     }
   }
