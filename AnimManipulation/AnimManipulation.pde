@@ -1,6 +1,4 @@
-//import processing.video.*;
-
-PShape hex;
+PShape hex, square;
 Animation anim;
 
 void setup() {
@@ -13,30 +11,50 @@ void setup() {
   
   // ---------
   
-  hex = createShape();
-  
-  fill(255);
   background(51);
- // pushMatrix();
+  
+  hex = createShape();
+  square = createShape();
+  
+  square.beginShape();
+  square.noFill();
+  square.strokeWeight(2);
+  square.stroke(255);
+  square.vertex(10, 10);
+  square.vertex(10, 30);
+  square.vertex(30, 30);
+  square.vertex(30, 10);
+  square.vertex(10, 10);
+  square.endShape();
+  
+  
   hex.beginShape();
+  hex.noFill();
   hex.strokeWeight(2);
   hex.stroke(255);
   
   translate(width/2, height/2);
-  for(int i = 0; i < 6; i++){
-    hex.vertex(0, -50); // TESELLATION ERROR
+  for(int i = 0; i < 7; i++){
+    hex.vertex(0, -70); // FUCK
     rotate(radians(60));
-    ellipse(0, -50, 2,2);
+    text(String.valueOf(i), 0, -70, 0);
   }
   
-  hex.endShape(CLOSE);
+  hex.endShape();
   //popMatrix();
+  
+  //shape(hex, width/2, height/2);
 }
 
 void draw(){
-  frame.setTitle(String.valueOf(frameRate));
+  // frame.setTitle(String.valueOf(frameRate));
+  // anim.display(0,0);
+  hex.setFill(color(#FFFFFF));
+  hex.setStrokeWeight(5);
+  hex.setStroke(color(#FFFFFF));
+  shape(hex, 0,0);
   
-  shape(hex);
+  shape(square, width/2, height/2);
 }
 
 
