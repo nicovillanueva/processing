@@ -1,12 +1,10 @@
 PShape hex;
 Animation anim;
-float tx;
 
 void setup() {
   size(500, 500, P2D);
   frameRate(24);
   background(51);
-  tx = random(10000);
   
   // ---------
   
@@ -35,12 +33,12 @@ void setup() {
   hex.endShape(CLOSE);
 }
 
+  // ---------
+
 void draw(){
-  this.tx += 0.01;
   frame.setTitle(String.valueOf(frameRate));
   anim.display(0,0);
   filter(INVERT);
-  hex.scale(map(noise(tx), 0.0, 1.0, 0.9, 1.1)); // scaling is a little... odd
   shape(hex);
 }
 
@@ -63,11 +61,6 @@ class Animation {
   
   void display(float x, float y){
     frame = (frame+1) % imgCount;
-  /*  PImage img = imgs[frame];
-    float r = red(img.pixels[width*400+10]);
-    r += 200.0f;
-    img.pixels[width*400+10] = color(r, blue(img.pixels[width*400+10]), green(img.pixels[width*400+10]));
-    */
     image(imgs[frame], x, y);
   }
   
