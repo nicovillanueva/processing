@@ -16,9 +16,10 @@ void setup() {
   //PImage result = gltchr.getSteppedTransposedRgb(img, 20, 10);
   //PImage result = gltchr.getWeirdShit(width, height);
   //PImage result = gltchr.getThresholdDisplacement(img, 125);
-  PImage result = gltchr.getByteGlitched("mein_profile.jpg", 200);
+  PImage result = gltchr.getByteGlitched(img, 38);
+  result = gltchr.getTransposedRgb(result, 20, 0);
+  result = gltchr.getSteppedTransposedRgb(result, 20, 25);
   
   image(result, 0, 0);
   saveFrame("frame-####.jpg");
 }
-

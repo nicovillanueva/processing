@@ -1,3 +1,10 @@
+import java.io.File;
+import java.nio.*;
+
+/**
+* Convert into singleton!!!
+*/
+
 class Glitcher{
   PImage output;
   float r, g, b;
@@ -52,22 +59,6 @@ class Glitcher{
   }
   
   /**
-  *  I screwed up and something cool came up.
-  *  Left it for science.
-  */
-  public PImage getWeirdShit(int wid, int hei) {
-    this.output = createImage(wid, hei, RGB);
-    this.output.loadPixels();
-    
-    for(int h = 0; h < output.height; h++){
-      for(int w = 0; w < output.width; w++){
-        this.output.pixels[w * h] = color(255, 255, 0);
-      }
-    }
-    return this.output;
-  }
-  
-  /**
   * Displaces the pixel, depending on it's brightness.
   */
   public PImage getThresholdDisplacement(PImage src, int maxDisplacement) {
@@ -84,19 +75,62 @@ class Glitcher{
   }
   
   /**
-  * Gets the filename of the image to hack
-  * fucks it up, saves the hacked copy,
-  * and returns the PImage of the latter.
+  * Get PImage to fuck, save it into a file (to get each byte)
+  * 
   */
-  public PImage getByteGlitched(String file, int bytesToInject) {
-    byte[] data = loadBytes(file);
+  public PImage getByteGlitched(PImage src, int bytesToInject) {
+    String preHackFile = dataPath("hackme.jpg");
+    String postHackFile = dataPath("hacked.jpg");
+    src.save(preHackFile);
+    byte[] data = loadBytes(preHackFile);
     
     for(int i = 0; i < bytesToInject; i++){
       data[(int)random(128, data.length)] = (byte)(random(255));
+      println("Corruption rounds: " + (i+1));
     }
     
-    saveBytes("hacked.jpg", data);
-    return loadImage("hacked.jpg");
+    saveBytes(postHackFile, data);
+    
+    PImage hacked = loadImage(postHackFile);
+    
+    new File(preHackFile).delete();
+    new File(postHackFile).delete();
+    return hacked;
   }
   
+  public PImage getByteGlitchedNEW(PImage src, int bytesToInject) {
+    String postHackFile = dataPath("hacked.jpg");
+    
+    src.loadPixels();
+    int[] srcpxls = src.pixels; 
+    /*ByteBuffer bytebuff = ByteBuffer.allocate(srcpixels.length * 4);
+    IntBuffer intbuff = bytebuff.asIntBuffer();
+    intbuff.put(srcpixels);
+    byte[] data = bytebuff.array();*/
+    ByteBuffer bb = ByteBuffer.allocate(srcpxls.length * 4);
+    bb.asIntBuffer().put(srcpxls);
+    byte[] data = bb.array();
+    
+    for(int i = 0; i < bytesToInject; i++){
+      data[(int)random(128, data.length)] = (byte)(random(255));
+      println("Corruption rounds: " + (i+1));
+    }
+    
+    saveBytes(postHackFile, data);
+    
+    PImage hacked = loadImage(postHackFile);
+    
+    new File(postHackFile).delete();
+    return hacked;
+  }
+  
+  /**
+  * Pixellate
+  */
+  public PImage getPixelatedImage(PImage src, int sqSize) {
+     // Divide into square array
+     // Take average
+     // fill each pxl with avg
+     return null;
+  }
 }
