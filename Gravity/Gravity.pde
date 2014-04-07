@@ -11,7 +11,7 @@ void setup() {
 
 void draw() {
   // versor
-  PVector dir = PVector.sub(t1.pos, t2.pos);
+  PVector dir = PVector.sub(t1.position, t2.position);
   float distance = dir.magnitude(); // distance
   dir.normalize();
   

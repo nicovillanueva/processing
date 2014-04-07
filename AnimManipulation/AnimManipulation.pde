@@ -1,21 +1,20 @@
 PShape hex;
+PImage shapeImage;
 Animation anim;
 
 void setup() {
   size(500, 500, P2D);
   frameRate(24);
   background(51);
-  
+
   // ---------
-  
+
   anim = new Animation("soothing_", 10);
   
   // ---------
   
   int sides = 6;
   float radius = width/4;
-  
-  // ---------
   
   hex = createShape();
 
@@ -40,6 +39,7 @@ void draw(){
   anim.display(0,0);
   filter(INVERT);
   shape(hex);
+  image(shapeImage, 0, 0);
 }
 
 

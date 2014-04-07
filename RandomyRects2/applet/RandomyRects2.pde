@@ -1,6 +1,5 @@
 HCanvas canv;
 HColorPool colors;
-int rectSize;
 
 void setup(){
   size(600, 600);
@@ -12,14 +11,14 @@ void setup(){
   canv = new HCanvas().autoClear(false).fade(1);
   H.add(canv);
   
-  rectSize = 50;
+  int rectSize = 50;
   float spd = .5;
   
   HRect[] rects = new HRect[8];
   for(int i = 0; i < rects.length; i++){
     rects[i] = new HRect(rectSize);
     
-    rects[i].rounding(rectSize/5)
+    rects[i].rounding(10)
      .fill(colors.getColor())
      .stroke(#000000, 150)
      .strokeWeight(6)
@@ -43,14 +42,6 @@ void setup(){
       case 7:
         new HRotate().target(rects[i]).speed(-spd); break;
     }
-    
-    new HOscillator()
-      .target(rects[i])
-      .property(H.SIZE)
-      .range(40, 50)
-      .speed(1)
-      .freq(3);
-    
   }
 
   canv.add(rects[0].anchor(rectSize, 0));
@@ -63,11 +54,10 @@ void setup(){
   canv.add(rects[5].anchor(rectSize*3, -rectSize*2));
   
   canv.add(rects[6].anchor(-rectSize*3, -rectSize*3));
-  canv.add(rects[7].anchor(rectSize*4, rectSize*4));
-  
+  canv.add(rects[7].anchor(rectSize*4, rectSize*4));  
 }
 
 void draw() {
-  frame.setTitle(String.valueOf(frameRate) + " - " + String.valueOf(frameCount));
+  frame.setTitle(String.valueOf(frameRate));
   H.drawStage();
 }
